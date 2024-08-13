@@ -44,7 +44,9 @@ async function startScraper(url, jsonFileName) {
     }
 
     const jsonFilePath = path.join(dataFolder, `${jsonFileName}.json`);
-    saveData(products, jsonFilePath);
+    
+    // Save the extracted data along with the URL to a JSON file
+    saveData(products, jsonFilePath, url);
 
     console.log(`Data written to ${jsonFilePath}`);
   } catch (error) {

@@ -2,13 +2,15 @@
 
 const fs = require('fs');
 
-// Save extracted data to a JSON file
-function saveData(data, filePath) {
-  try {
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
-  } catch (err) {
-    console.error('Error writing file', err);
-  }
+function saveData(data, jsonFilePath, url) {
+  // Add the URL at the top of the data
+  const dataWithUrl = {
+    url: url,
+    products: data
+  };
+
+  // Write the modified data to the JSON file
+  fs.writeFileSync(jsonFilePath, JSON.stringify(dataWithUrl, null, 2));
 }
 
 module.exports = { saveData };
