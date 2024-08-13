@@ -6,8 +6,7 @@ const { config } = require('./functions/config');
 const path = require('path');
 const fs = require('fs');
 
-(async () => {
-  // Launch the browser with necessary configurations
+async function startScraper(url, jsonFileName) {
   const browser = await chromium.launch({
     headless: false,
     args: [
@@ -17,7 +16,6 @@ const fs = require('fs');
     ],
   });
 
-  // Create a new browser context with user agent and other settings
   const context = await browser.newContext({
     userAgent: config.userAgent,
     viewport: config.viewport,
@@ -25,52 +23,36 @@ const fs = require('fs');
     ignoreHTTPSErrors: true,
   });
 
-  // Add a script to modify navigator.webdriver
   await context.addInitScript(() => {
     Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
   });
 
-  // Create a new page in the context
   const page = await context.newPage();
 
-  while (true) { // Infinite loop to keep the program running
-    try {
-      // Navigate to the target page
-      await page.goto(' ', { waitUntil: 'networkidle' });
+  try {
+    await page.goto(url, { waitUntil: 'networkidle' });
+    await page.waitForTimeout(3000);
 
-      // Wait for the page to load
-       await page.waitForTimeout(3000);
+    await scrollToBottom(page);
 
-      // Scroll to the bottom of the page to load all content
-      await scrollToBottom(page);
+    const products = await extractData(page);
 
-      // Extract product data
-      const products = await extractData(page);
+    const dataFolder = path.join(__dirname, 'data');
 
-      // Define the data directory path
-      const dataFolder = path.join(__dirname, 'data');
-
-      // Ensure the data directory exists
-      if (!fs.existsSync(dataFolder)) {
-        fs.mkdirSync(dataFolder);
-      }
-
-      // Define the JSON file path
-      const jsonFilePath = path.join(dataFolder, '.json');
-
-      // Save the extracted data to a JSON file
-      saveData(products, jsonFilePath);
-
-      console.log(`Data written to ${jsonFilePath}`);
-
-    } catch (error) {
-      console.error('Error occurred:', error);
+    if (!fs.existsSync(dataFolder)) {
+      fs.mkdirSync(dataFolder);
     }
 
-    // Wait for 30 seconds before scraping again
-    await page.waitForTimeout(30000);
-  }
+    const jsonFilePath = path.join(dataFolder, `${jsonFileName}.json`);
+    saveData(products, jsonFilePath);
 
-  // The browser won't be closed due to the infinite loop
-  // await browser.close();
-})();
+    console.log(`Data written to ${jsonFilePath}`);
+  } catch (error) {
+    console.error('Error occurred during scraping:', error);
+    throw error;
+  } finally {
+    await browser.close();
+  }
+}
+
+module.exports = { startScraper };
