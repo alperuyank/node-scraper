@@ -2,9 +2,9 @@
 
 async function scrollToBottom(page) {
     const distance = 250; // Distance to scroll (in pixels)
-    const delay = 300;     // Delay between each scroll step (in milliseconds)
+    const delay = 250;     // Delay between each scroll step (in milliseconds)
     let scrollAttempts = 0;
-    const maxScrollAttempts = 50; // Max attempts to scroll
+    const maxScrollAttempts = 60; // Max attempts to scroll
   
     // Initial scroll position
     let previousHeight = await page.evaluate('document.body.scrollHeight');

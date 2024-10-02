@@ -10,7 +10,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "express": "^4.19.2",
+    "express": "^4.21.0",
+    "fs": "^0.0.1-security",
     "node-fetch": "^3.3.2",
     "playwright": "^1.46.0",
     "puppeteer": "^23.0.1",

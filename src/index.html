@@ -1,23 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Web Scraper</title>
+  <style>
+    /* Global Styles */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    /* Heading Styles */
+    h1 {
+      width: 100%;
+      text-align: center;
+      color: #4a90e2;
+      margin-bottom: 20px;
+    }
+
+    /* Container for Forms */
+    .form-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px; /* Aradaki boşluk */
+      margin-bottom: 20px;
+    }
+
+    /* Form Styles */
+    form {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 300px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Input Label Styles */
+    label {
+      width: 100%;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #4a90e2;
+      text-align: left;
+    }
+
+    /* Text Input Styles */
+    input[type="text"],
+    input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+
+    /* Button Styles */
+    button {
+      width: 100%;
+      background-color: #4a90e2;
+      color: #ffffff;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #357ab8;
+    }
+
+    /* Result Styles */
+    #result {
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      color: #020303;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 480px) {
+      form {
+        padding: 15px;
+        width: 90%;
+      }
+
+      input[type="text"],
+      button {
+        font-size: 14px;
+        padding: 8px;
+      }
+
+      #result {
+        font-size: 18px;
+      }
+    }
+  </style>
 </head>
+
 <body>
   <h1>Web Scraper</h1>
-  <form id="scrape-form">
-    <label for="url">Enter URL:</label>
-    <input type="text" id="url" required>
-    <br>
-    <label for="jsonFileName">JSON File Name:</label>
-    <input type="text" id="jsonFileName" required>
-    <br>
-    <button type="submit">Start Scraping</button>
-  </form>
+  <div class="form-container">
+    <form id="scrape-form">
+      <label for="url">Enter URL:</label>
+      <input type="text" id="url">
+      <div>
+        <label for="fileInput">Upload File:</label>
+        <input type="file" id="fileInput" />
+      </div>
+      <button type="submit">Start Scraping</button>
+    </form>
+    <!-- <div>
+      <label for="google-url">Eşlemek İçin Aranan URL:</label>
+      <input type="text" id="google-url">
+      <button id="startButton">Start Matching</button>
+      <button id="stopButton">Stop Matching</button>
+    </div> -->
+  </div>
+
   <p id="result"></p>
 
   <script src="client.js"></script>
 </body>
+
 </html>
