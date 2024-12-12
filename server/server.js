@@ -32,7 +32,7 @@ app.post('/scrape', async (req, res) => {
   }
 });
 
-aapp.post('/find-data', async (req, res) => {
+app.post('/find-data', async (req, res) => {
   try {
     const { url } = req.body; // Eşleşecek URL'yi al
 
